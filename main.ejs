@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Teacher Checklist</title>
+</head>
+<body>
+    <h1>Teacher Checklist</h1>
+
+    <form action="/" method="post">
+        <label for="task">Task:</label>
+        <input type="text" name="task" id="task" placeholder="Enter a task" required>
+        <label for="deadline">Deadline:</label>
+        <input type="date" name="deadline" id="deadline" required>
+        <label for="priority">Priority:</label>
+        <select name="priority" id="priority">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <div class="task-tables">
+        <table id="todoTable">
+            <thead>
+                <tr>
+                    <th>To-Do Tasks</th>
+                </tr>
+            </thead>
+            <tbody id="todoTasks">
+                <!-- To-Do tasks will be displayed here -->
+                <% todoTasks.forEach(function(task) { %>
+                <tr>
+                    <td>
+                        <input type="checkbox" class="task-checkbox" <% if (task.is_completed) { %>checked<% } %>
+                            data-task-id="<%= task.id %>">
+                        <%= task.task_name %> (Deadline: <%= task.deadline %>, Priority: <%= task.priority %>)
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+        <table id="doneTable">
+            <thead>
+                <tr>
+                    <th>Done Tasks</th>
+                </tr>
+            </thead>
+            <tbody id="doneTasks">
+                <!-- Done tasks will be displayed here -->
+                <% doneTasks.forEach(function(task) { %>
+                <tr>
+                    <td>
+                        <input type="checkbox" class="task-checkbox" <% if (task.is_completed) { %>checked<% } %>
+                            data-task-id="<%= task.id %>">
+                        <%= task.task_name %> (Deadline: <%= task.deadline %>, Priority: <%= task.priority %>)
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+    <button id="toggleTasksButton">Toggle Tasks</button>
+    <button id="checkAllButton">Check All</button>
+    <button id="uncheckAllButton">Uncheck All</button>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('toggleTasksButton');
+    const checkAllButton = document.getElementById('checkAllButton');
+    const uncheckAllButton = document.getElementById('uncheckAllButton');
+    const todoTable = document.getElementById('todoTable');
+    const doneTable = document.getElementById('doneTable');
+    const todoTasks = document.getElementById('todoTasks');
+    const doneTasks = document.getElementById('doneTasks');
+
+    toggleButton.addEventListener('click', function () {
+        const tasks = document.querySelectorAll('input.task-checkbox');
+        tasks.forEach(function (task) {
+            if (task.checked) {
+                // Move the task to the "Done" section
+                const parentRow = task.parentElement.parentElement;
+                const taskId = task.getAttribute('data-task-id');
+
+                // Update the task status in the database
+                fetch(`/update/${taskId}?completed=1`, {
+                    method: 'POST',
+                }).then(response => {
+                    if (response.ok) {
+                        // Task status updated successfully, move it to the "Done" section
+                        const doneClone = parentRow.cloneNode(true);
+                        doneTasks.appendChild(doneClone);
+                        parentRow.remove();
+                    } else {
+                        // Handle error if needed
+                        console.error('Error updating task status in the database');
+                    }
+                }).catch(error => {
+                    // Handle fetch error if needed
+                    console.error('Fetch error:', error);
+                });
+            }
+        });
+    });
+
+    // Rest of your JavaScript code
+});
+
+
+    </script>
+</body>
+</html>
