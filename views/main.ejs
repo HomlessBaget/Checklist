@@ -72,9 +72,11 @@
     </div>
    
 
-    <button id="toggleTasksButton">Toggle Tasks</button>
-    <button id="checkAllButton">Check All</button>
-    <button id="uncheckAllButton">Uncheck All</button>
+<button id="toggleTasksButton">Toggle Tasks</button>
+<button id="checkAllTodoButton">Check All To-Do</button>
+<button id="uncheckAllTodoButton">Uncheck All To-Do</button>
+<button id="checkAllDoneButton">Check All Done</button>
+<button id="uncheckAllDoneButton">Uncheck All Done</button>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -109,40 +111,58 @@
                 });
             });
 
-            const checkAllButton = document.getElementById('checkAllButton');
-            const uncheckAllButton = document.getElementById('uncheckAllButton');
+const checkAllTodoButton = document.getElementById('checkAllTodoButton');
+const uncheckAllTodoButton = document.getElementById('uncheckAllTodoButton');
+const checkAllDoneButton = document.getElementById('checkAllDoneButton');
+const uncheckAllDoneButton = document.getElementById('uncheckAllDoneButton');
 
-            checkAllButton.addEventListener('click', function () {
-                // Select all checkboxes in the "To-Do" section
-                const checkboxes = todoTasks.querySelectorAll('input.task-checkbox');
-                checkboxes.forEach(checkbox => {
-                    checkbox.checked = true;
-                });
-            });
+checkAllTodoButton.addEventListener('click', function () {
+    // Select all checkboxes in the "To-Do" section
+    const todoCheckboxes = document.querySelectorAll('#todoTasks input.task-checkbox');
+    todoCheckboxes.forEach(checkbox => {
+        checkbox.checked = true;
+    });
+});
 
-            uncheckAllButton.addEventListener('click', function () {
+uncheckAllTodoButton.addEventListener('click', function () {
     // Deselect all checkboxes in the "To-Do" section
-    const checkboxes = todoTable.querySelectorAll('input.task-checkbox');
-    checkboxes.forEach(checkbox => {
+    const todoCheckboxes = document.querySelectorAll('#todoTasks input.task-checkbox');
+    todoCheckboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
+});
+
+checkAllDoneButton.addEventListener('click', function () {
+    // Select all checkboxes in the "Done" section
+    const doneCheckboxes = document.querySelectorAll('#doneTasks input.task-checkbox');
+    doneCheckboxes.forEach(checkbox => {
+        checkbox.checked = true;
+    });
+});
+
+uncheckAllDoneButton.addEventListener('click', function () {
+    // Deselect all checkboxes in the "Done" section
+    const doneCheckboxes = document.querySelectorAll('#doneTasks input.task-checkbox');
+    doneCheckboxes.forEach(checkbox => {
         checkbox.checked = false;
 
-        app.post('/update/:id', (req, res) => {
-  const taskId = req.params.id;
-  const isCompleted = req.query.completed === '1'; // Make sure it's '1'
+//         app.post('/update/:id', (req, res) => {
+//   const taskId = req.params.id;
+//   const isCompleted = req.query.completed === '1'; // Make sure it's '1'
 
-  connection.query(
-    'UPDATE tasks SET is_completed = ? WHERE id = ?',
-    [isCompleted, taskId],
-    function (error) {
-      if (error) {
-        console.error(error);
-        res.status(500).send('Error updating task status.');
-      } else {
-        res.status(200).send('Task status updated.');
-      }
-    }
-  );
-});
+//   connection.query(
+//     'UPDATE tasks SET is_completed = ? WHERE id = ?',
+//     [isCompleted, taskId],
+//     function (error) {
+//       if (error) {
+//         console.error(error);
+//         res.status(500).send('Error updating task status.');
+//       } else {
+//         res.status(200).send('Task status updated.');
+//       }
+//     }
+//   );
+// });
 
                 });
             });
