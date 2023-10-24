@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 8080;
+
 const path = require('path');
 const ejs = require('ejs');
 const bodyParser = require('body-parser');
@@ -8,8 +9,10 @@ const mysql = require('mysql2');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
+app.use('/css', express.static(path.join(__dirname, 'styles/css'))); //Css link
 
 const connection = mysql.createConnection({
   host: '192.168.1.161',
@@ -21,14 +24,15 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
+//inserts new data into the database
 app.post('/', (req, res) => {
   const task = req.body.task;
-  const deadline = req.body.deadline;
+  const datetime = req.body.datetime; // This will capture the date and time input.
   const priority = req.body.priority;
 
   connection.query(
-    'INSERT INTO tasks (tasks, deadline, priority) VALUES (?, ?, ?)',
-    [task, deadline, priority],
+    'INSERT INTO tasks (tasks, deadline, priority) VALUES (?, ?, ?)', // Include datetime
+    [task, datetime, priority], // Add datetime variable
     function (error) {
       if (error) throw error;
       res.redirect('/');
@@ -55,6 +59,7 @@ app.post('/update/:id', (req, res) => {
   );
 });
 
+// Displays tasks in table rows
 app.get('/', (req, res) => {
   connection.query('SELECT * FROM tasks', function (error, results) {
     if (error) {
