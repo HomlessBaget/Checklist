@@ -1,0 +1,233 @@
+body{
+  background-image: url('https://static.vecteezy.com/system/resources/previews/027/684/073/non_2x/autumn-leaves-background-free-photo.jpg'); /* Změňte cestu k vašemu obrázku */;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+/* -------------------------------------------------------------------------------------------------*/
+h1 {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 48px;
+  text-transform: uppercase;
+  color: red;
+}
+/* -------------------------------------------------------------------------------------------------*/
+
+/* Moderní podzimní styl pro formulář */
+form {
+text-align: center;
+margin: 15px 150px;
+background-color: rgba(0, 0, 0, 0.65); /* Průhledná šedá barva pozadí (RGBA) */
+padding: 50px 0px;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(102, 12, 0, 0.2); /* Hnědý odstín stínu */
+color: #333; /* Černá barva textu */
+}
+
+form label {
+
+color: transparent;
+background: #e63601; /* Barva pozadí popisku */
+background-clip: text;
+-webkit-background-clip: text;
+animation: text-shadow-flicker 3s infinite;
+}
+
+form input[type="text"],
+form select,
+form input[type="datetime-local"] {
+margin: 10px;
+padding: 10px;
+background-color: rgba(244, 244, 244, 0.9); /* Průhledná šedá barva pro vstupy (RGBA) */
+color: #333;
+border: 1px solid #ccc;
+border-radius: 5px;
+outline: none;
+}
+
+form button {
+margin: 10px;
+padding: 10px;
+background-color: #af5b06; /* Hnědá barva pro tlačítko */
+color: #fff; /* Bílá barva textu tlačítka */
+border: none;
+border-radius: 5px;
+outline: none;
+transition: background-color 0.3s;
+}
+
+form button:hover {
+background-color: #c94219; /* Teplý hnědý odstín pro tlačítko při najetí myší */
+}
+
+/* Klíčové snímky pro animaci podzimního efektu */
+@keyframes autumn-fall {
+0% {
+    transform: translateY(-30px);
+}
+100% {
+    transform: translateY(0);
+}
+}
+/* -------------------------------------------------------------------------------------------------*/
+/* Animace pro vstupy */
+form input[type="text"],
+form input[type="date"],
+form select {
+animation: autumn-fall 0.5s ease;
+}
+
+/* .obalTlacitek{
+text-align: right;
+} */
+
+.task-tables {
+display: flex;
+justify-content: space-between;
+}
+
+#doneTable,
+#todoTable {
+  border-collapse: collapse; /* Odstranění mezery mezi buňkami tabulky */
+  width: 100%;
+  margin: 10px;
+  background: rgba(0, 0, 0, 0.8); /* Průhledné pozadí s bílou barvou */
+  box-shadow: 0 0 10px rgba(102, 12, 0, 0.2);
+  border-radius: 10px; /* Zaoblené okraje pro tabulku */
+}
+
+
+#doneTable th,
+#todoTable th {
+  background-color: #cf2608; /* Barva pozadí záhlaví tabulky */
+  color: white; /* Bílá barva textu v záhlaví tabulky */
+  text-align: left;
+  border-top-left-radius: 10px; /* Zaoblený horní levý roh záhlaví tabulky */
+  border-top-right-radius: 10px; /* Zaoblený horní pravý roh záhlaví tabulky */
+}
+
+
+#doneTable th,
+#doneTable td,
+#todoTable th,
+#todoTable td {
+  padding: 10px; /* Odsazení buněk tabulky */
+}
+
+#doneTable tr:nth-child(even),
+#todoTable tr:nth-child(even) {
+  background-color: rgba(235, 66, 23, 0.2); /* Průhledné oranžové pozadí pro sudé řádky */
+  color:#fff;
+}
+
+#doneTable tr:nth-child(odd),
+#todoTable tr:nth-child(odd) {
+  background-color: rgba(255, 120, 80, 0.2); /* Průhledné oranžové pozadí pro liché řádky */
+  color:#fff
+}
+
+
+/* -------------------------------------------------------------------------------------------------*/
+/* Styl pro tlačítka */
+button#toggleTasksButton,
+button#checkAllTodoButton,
+button#uncheckAllTodoButton,
+button#checkAllDoneButton,
+button#uncheckAllDoneButton,
+button#deleteSelected {
+  background-color: #af5b06; 
+  color: #e2be46;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 10px ;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.tlacitkoToDo {
+float: left; /* Levá strana */
+margin: 0 130px; /* Mezera mezi tlačítky */
+}
+
+.tlacitkoDone {
+float: right; /* Pravá strana */
+margin: 0 80px; /* Mezera mezi tlačítky */
+}
+/* -------------------------------------------------------------------------------------------------*/
+/* Změna barvy checkboxu */
+/* #doneTable input[type="checkbox"],
+#todoTable input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  -webkit-appearance: none; 
+  appearance: none; 
+  background-color: #d46835; 
+  border: 1px solid #5f1a08;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 5px;
+} */
+
+/* Ikona zaškrtávacího checkboxu */
+/* #doneTable input[type="checkbox"]::before,
+#todoTable input[type="checkbox"]::before {
+  content: "✔"; 
+  display: inline-block;
+  font-size: 16px; 
+  line-height: 20px; 
+  text-align: center;
+  color: #ff2600; 
+} */
+/* -------------------------------------------------------------------------------------------------*/
+
+button#toggleTasksButton:hover, 
+button#checkAllTodoButton:hover,
+button#uncheckAllTodoButton:hover,
+button#checkAllDoneButton:hover,
+button#uncheckAllDoneButton:hover,
+button#deleteSelected:hover {
+  background-color: #da370e; 
+}
+#doneTable::before {
+top: 0;
+left: 0;
+animation: fall-leaves-left 10s linear infinite;
+}
+
+#todoTable::before {
+top: 0;
+right: 0;
+animation: fall-leaves-right 10s linear infinite;
+}
+
+/* Add your existing CSS styles here */
+#taskWindow {
+  position: fixed;
+  top: 5%;
+  right: -300px;
+  transform: translateY(-50%);
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-left: 1px round #ccc;
+  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+  transition: right 0.5s ease-out; /* Smooth sliding animation */
+  cursor: pointer;
+}
+
+#taskWindow.show {
+  right: 0;
+}
+
+#taskWindow h3 {
+  margin-bottom: 5px;
+}
+
+#taskWindow ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#taskWindow li {
+  margin-bottom: 5px;
+}
