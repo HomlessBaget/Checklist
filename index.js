@@ -9,7 +9,6 @@ const mysql = require('mysql2');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
 app.use('/css', express.static(path.join(__dirname, 'styles/css'))); //Css link
@@ -75,6 +74,37 @@ app.get('/', (req, res) => {
   });
 });
 
+app.post('/delete/:id', (req, res) => {
+  const taskId = req.params.id;
+
+  // Smazat záznam z obou tabulek (To-Do Task a Done Task)
+  connection.query(
+    'DELETE FROM tasks WHERE id = ?',
+    [taskId],
+    function (error) {
+      if (error) {
+        console.error(error);
+        res.status(500).send('Error deleting the task in the database');
+      } else {
+        res.status(200).send('Task deleted successfully');
+      }
+    }
+  );
+});
+
+
+app.get('/tasks', (req, res) => {
+  connection.query('SELECT * FROM tasks', function (error, results) {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error retrieving tasks.' });
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
-});
+})
